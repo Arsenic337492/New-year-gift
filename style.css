@@ -1,0 +1,201 @@
+:root{
+	--bg-color:#f2eede;
+	--card-bg:rgba(255,255,245,0.95);
+	--accent:#7b3fbf; /* фиолетовый акцент */
+	--accent-strong:rgba(123,63,191,0.22);
+	--muted:#666;
+	--radius:16px; /* общая скруглённость */
+	--door-closed: url('https://github.com/Arsenic337492/New-year-gift/blob/main/images/Door-closed.png?raw=true');
+	--door-open:   url('https://github.com/Arsenic337492/New-year-gift/blob/main/images/Door-open.png?raw=true');
+}
+html,body{height:100%;margin:0;font-family:"Comic Sans MS","Comic Sans",cursive, "Segoe UI", Roboto, sans-serif;background:#ddd;}
+body{
+	/* Фон задан пользователем (заменяет background.jpg) */
+	background-image: url('https://github.com/Arsenic337492/New-year-gift/blob/main/images/%D0%A4%D0%BE%D0%BD-%D0%9D%D0%93.png?raw=true');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	padding:32px;
+	backdrop-filter: blur(0.5px);
+}
+.container{
+	/* центрируем содержимое и ставим кнопку под письмом */
+	max-width:900px;
+	width:100%;
+	display:flex;
+	flex-direction:column;
+	gap:18px;
+	align-items:center;
+	justify-content:center;
+	padding:0 16px;
+}
+.letter{
+	/* фиксируем читаемую ширину и убираем растяжение */
+	width:100%;
+	max-width:720px;
+	flex: none;
+	background:var(--card-bg);
+	padding:36px;
+	border-radius:var(--radius);
+	box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+	border-left:6px solid rgba(123,63,191,0.12);
+	position:relative;
+}
+.letter h1{margin:0 0 12px;color:var(--accent);font-size:1.6rem;}
+.letter p{margin:0 0 14px;color:var(--muted);line-height:1.5;}
+.signature{margin-top:22px;font-weight:600;color:#333}
+.side{
+	/* кнопка снизу, по центру */
+	width:auto;
+	display:flex;
+	flex-direction:row;
+	gap:12px;
+	align-items:center;
+	justify-content:center;
+	margin-top:4px;
+}
+.qr{
+	width:220px;
+	height:220px;
+	background:linear-gradient(180deg,#fff,#f8f4ff);
+	border-radius:var(--radius);
+	box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	text-align:center;
+	padding:12px;
+	color:var(--muted);
+	font-size:14px;
+	cursor:pointer;
+}
+.qr:focus{outline:3px solid var(--accent-strong);outline-offset:3px}
+.hub-btn{
+	display:inline-block;
+	text-decoration:none;
+	background:var(--accent);
+	color:#fff;
+	padding:10px 14px;
+	border-radius:12px;
+	font-weight:600;
+	box-shadow: 0 6px 16px rgba(123,63,191,0.18);
+	transition: transform 0.6s cubic-bezier(.2,.8,.2,1), background .12s ease;
+	will-change: transform;
+}
+.hub-btn:active{transform:translateY(1px);}
+.note{font-size:13px;color:var(--muted);text-align:center}
+
+/* новые/перенесённые стили для hub.html (убраны inline-стили) */
+.hub-header{
+	/* поднять заголовок вверх, по центру */
+	position:fixed;
+	top:18px;
+	left:50%;
+	transform:translateX(-50%);
+	z-index:40;
+	padding:8px 16px;
+	background:transparent;
+}
+.hub-header{padding:24px;text-align:center}
+.hub-main{
+	max-width:1200px;
+	margin:0 auto;
+	padding:16px;
+	min-height: calc(100vh - 48px);
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+
+/* сетка: используем абсолютное позиционирование для дверей по углам */
+.hub-grid{
+	position:relative;
+	width:100%;
+	max-width:1200px;
+	/* высота чуть меньше, чтобы нижние двери не уходили за экран */
+	height:calc(100vh - 120px);
+	margin:0 auto;
+	/* отключаем grid для явного позиционирования */
+	display:block;
+}
+
+/* кнопки-пазлы (двери в углах) — абсолютное позиционирование */
+.puzzle-btn{
+	/* теперь фиксированы по окну, в углах страницы */
+	position:fixed;
+	display:block;
+	width:220px;
+	height:320px;
+	background-image: var(--door-closed);
+	background-size: cover;
+	background-position: center;
+	border-radius:18px;
+	border:0; /* убираем рамку */
+	box-shadow:none; /* убираем тень */
+	transition: transform .18s ease, opacity .18s ease;
+	z-index:45;
+	/* если в DOM остался текст — скрыть */
+	color: transparent;
+	font-size:0;
+	line-height:0;
+}
+
+/* позиционирование от краёв (увеличенные боковые отступы, верх — ниже заголовка) */
+.hub-grid > .puzzle-btn:nth-child(1){ top:100px; left:140px; }
+.hub-grid > .puzzle-btn:nth-child(2){ top:100px; right:140px; }
+.hub-grid > .puzzle-btn:nth-child(3){ bottom:140px; left:140px; }
+.hub-grid > .puzzle-btn:nth-child(4){ bottom:140px; right:140px; }
+
+.puzzle-btn.visited{
+	/* убираем визуальные выделения — класс остаётся для логики */
+	opacity:1;
+	box-shadow:none;
+}
+
+/* увеличена центральная дверь */
+.final-door{
+	position:absolute;
+	left:50%;
+	top:50%;
+	transform:translate(-50%,-50%);
+	width:360px;
+	height:520px;
+	border-radius:20px;
+	background-image: var(--door-closed);
+	background-size: cover;
+	background-position: center;
+	/* убрано оформление-рамка */
+	box-shadow: none;
+	border: 0;
+	transition: transform .7s cubic-bezier(.2,.8,.2,1), background-image .12s linear;
+	z-index:42;
+}
+
+/* при входе — увеличивается и меняет картинку (анимация оставлена) */
+.final-door.entered{
+	background-image: var(--door-open);
+	transform: translate(-50%,-50%) scale(1.6);
+	/* тень убрана также */
+	box-shadow: none;
+	z-index:110;
+}
+
+/* responsive: уменьшить размеры и отступы на мобильных */
+@media (max-width:760px){
+	.hub-header{top:12px}
+	.hub-grid{height:calc(100vh - 96px)}
+	/* мобильные отступы чуть меньше */
+	.hub-grid > .puzzle-btn:nth-child(1){ top:72px; left:24px; }
+	.hub-grid > .puzzle-btn:nth-child(2){ top:72px; right:24px; }
+	.hub-grid > .puzzle-btn:nth-child(3){ bottom:72px; left:24px; }
+	.hub-grid > .puzzle-btn:nth-child(4){ bottom:72px; right:24px; }
+	.final-door{width:220px;height:320px}
+}
+
+.no-scroll{
+	overflow: hidden;
+	height: 100vh;
+}

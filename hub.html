@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Hub — Подарок Гуле</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<!-- добавлен класс no-scroll чтобы отключить прокрутку на этой странице -->
+<body class="no-scroll">
+	<header class="hub-header">
+		<h1>Hub — головоломки</h1>
+		<p>Сначала реши четыре головоломки, чтобы открыть центральную дверь.</p>
+	</header>
+
+	<main class="hub-main">
+		<!-- сетка 2x2 + центральная дверь -->
+		<div class="hub-grid" role="navigation" aria-label="Головоломки">
+			<a class="puzzle-btn" data-puzzle="1" href="puzzle1.html" aria-label="Головоломка 1" title="Головоломка 1"></a>
+			<a class="puzzle-btn" data-puzzle="2" href="puzzle2.html" aria-label="Головоломка 2" title="Головоломка 2"></a>
+
+			<a class="puzzle-btn" data-puzzle="3" href="puzzle3.html" aria-label="Головоломка 3" title="Головоломка 3"></a>
+			<a class="puzzle-btn" data-puzzle="4" href="puzzle4.html" aria-label="Головоломка 4" title="Головоломка 4"></a>
+
+			<!-- центральная дверь; aria-label вместо текста -->
+			<a class="final-door locked" id="finalDoor" href="#" aria-disabled="true" aria-label="Финальная дверь" title="Финальная дверь"></a>
+		</div>
+
+		<!-- Кнопка "Назад на главную" удалена -->
+	</main>
+
+	<script src="script.js" defer></script>
+</body>
+</html>
