@@ -1,12 +1,26 @@
 :root{
 	--bg-color:#f2eede;
 	--card-bg:rgba(255,255,245,0.95);
-	--accent:#7b3fbf; /* фиолетовый акцент */
+	--accent:#7b3fbf;
 	--accent-strong:rgba(123,63,191,0.22);
 	--muted:#666;
-	--radius:16px; /* общая скруглённость */
+	--radius:16px;
+
 	--door-closed: url('https://github.com/Arsenic337492/New-year-gift/blob/main/images/Door-closed.png?raw=true');
 	--door-open:   url('https://github.com/Arsenic337492/New-year-gift/blob/main/images/Door-open.png?raw=true');
+
+	/* размеры угловых дверей (по умолчанию) */
+	--puzzle-w: 220px;
+	--puzzle-h: 320px;
+
+	/* финальная дверь — масштаб относительно угловых (1.2 = +20%) */
+	--final-scale: 1.2;
+
+	/* финальная дверь: по умолчанию запечатана цепями */
+	--final-door-chained: url('https://github.com/Arsenic337492/New-year-gift/blob/main/images/Final-door-chained.png?raw=true');
+	/* зарезервировано для будущего: unchained / open */
+	--final-door-unchained: url('https://github.com/Arsenic337492/New-year-gift/blob/main/images/Final-door-unchained.png?raw=true');
+	--final-door-open: url('https://github.com/Arsenic337492/New-year-gift/blob/main/images/Final-door-open.png?raw=true');
 }
 html,body{height:100%;margin:0;font-family:"Comic Sans MS","Comic Sans",cursive, "Segoe UI", Roboto, sans-serif;background:#ddd;}
 body{
@@ -127,75 +141,214 @@ body{
 	/* теперь фиксированы по окну, в углах страницы */
 	position:fixed;
 	display:block;
-	width:220px;
-	height:320px;
-	background-image: var(--door-closed);
-	background-size: cover;
-	background-position: center;
+	width: var(--puzzle-w);
+	height: var(--puzzle-h);
 	border-radius:18px;
-	border:0; /* убираем рамку */
-	box-shadow:none; /* убираем тень */
-	transition: transform .18s ease, opacity .18s ease;
-	z-index:45;
-	/* если в DOM остался текст — скрыть */
-	color: transparent;
-	font-size:0;
-	line-height:0;
-}
-
-/* позиционирование от краёв (увеличенные боковые отступы, верх — ниже заголовка) */
-.hub-grid > .puzzle-btn:nth-child(1){ top:100px; left:140px; }
-.hub-grid > .puzzle-btn:nth-child(2){ top:100px; right:140px; }
-.hub-grid > .puzzle-btn:nth-child(3){ bottom:140px; left:140px; }
-.hub-grid > .puzzle-btn:nth-child(4){ bottom:140px; right:140px; }
-
-.puzzle-btn.visited{
-	/* убираем визуальные выделения — класс остаётся для логики */
-	opacity:1;
+	border:0;
 	box-shadow:none;
+	transition: transform .25s cubic-bezier(.2,.9,.3,1), opacity .25s ease;
+	z-index:30;
+	overflow:hidden;
+	/* добавлено will-change для плавной анимации */
+	will-change: transform;
 }
 
-/* увеличена центральная дверь */
+/* слой закрытой двери (уже есть) */
+.puzzle-btn::before{
+	content:"";
+	position:absolute;
+	inset:0;
+	background-image:var(--door-closed);
+	background-size:cover;
+	background-position:center;
+	opacity:1;
+	transform:scale(1);
+	transition: opacity .42s ease, transform .42s cubic-bezier(.2,.9,.3,1), filter .3s ease;
+	will-change: opacity, transform;
+}
+
+/* слой открытой двери (новое) */
+.puzzle-btn::after{
+	content:"";
+	position:absolute;
+	inset:0;
+	background-image:var(--door-open);
+	background-size:cover;
+	background-position:center;
+	opacity:0;
+	transform:scale(1);
+	transition: opacity .45s ease, transform .45s cubic-bezier(.2,.9,.3,1), filter .3s ease;
+	will-change: opacity, transform;
+}
+
+/* анимация открытия угловой двери */
+.puzzle-btn.opening{
+	transform: scale(1.04);
+}
+.puzzle-btn.opening::before{ opacity:0; transform:scale(0.98); filter:brightness(0.9); }
+.puzzle-btn.opening::after{ opacity:1; transform:scale(1.02); }
+
+/* после прохождения - показать открытую дверь */
+.puzzle-btn.visited{
+	transform: scale(1.02);
+}
+.puzzle-btn.visited::before{ opacity:0; }
+.puzzle-btn.visited::after{ opacity:1; }
+
+/* центральная дверь: два слоя — ::before (closed) и ::after (open) */
+/* базовое состояние */
 .final-door{
+	/* центрируем, делаем вертикальную дверь 3:4, высота 90% окна, ширина auto */
 	position:absolute;
 	left:50%;
 	top:50%;
 	transform:translate(-50%,-50%);
-	width:360px;
-	height:520px;
+	/* увеличить текущий размер на 25% + ещё 50% (итого *1.25*1.5) */
+	width: calc(var(--puzzle-w) * var(--final-scale) * 1.25 * 1.5);
+	height: calc(var(--puzzle-h) * var(--final-scale) * 1.25 * 1.5);
 	border-radius:20px;
-	background-image: var(--door-closed);
-	background-size: cover;
-	background-position: center;
-	/* убрано оформление-рамка */
-	box-shadow: none;
-	border: 0;
-	transition: transform .7s cubic-bezier(.2,.8,.2,1), background-image .12s linear;
-	z-index:42;
+	overflow:hidden;
+	transition: none;
+	z-index:50;
+	font-size:0;
 }
 
-/* при входе — увеличивается и меняет картинку (анимация оставлена) */
+/* closed layer — по умолчанию показываем chained-версии */
+.final-door::before{
+	content:"";
+	position:absolute;
+	inset:0;
+	background-image: var(--final-door-chained);
+	background-size:cover;
+	background-position:center;
+	opacity:1;
+	/* отключаем плавный переход (пока без анимации) */
+	transition: none;
+	will-change: opacity;
+}
+
+/* open layer (hidden by default) — зарезервировано */
+.final-door::after{
+	content:"";
+	position:absolute;
+	inset:0;
+	/* пока хранится open-версия, фактически не показывается без класса */
+	background-image: var(--final-door-open);
+	background-size:cover;
+	background-position:center;
+	opacity:0;
+	transition: none;
+	will-change: opacity;
+}
+
+/* unlocked (ready to open) — slight emphasis */
+.final-door.unlocked{ cursor:pointer; transform: translate(-50%,-50%) scale(1); }
+
+/* entered — мгновенно показать слой "open" без масштабирования */
 .final-door.entered{
-	background-image: var(--door-open);
-	transform: translate(-50%,-50%) scale(1.6);
-	/* тень убрана также */
-	box-shadow: none;
+	transform: translate(-50%,-50%) scale(1);
 	z-index:110;
 }
+.final-door.entered::before{ opacity:0; }
+.final-door.entered::after{ opacity:1; }
+
+/* позиционирование от краёв — по id, чтобы не зависеть от порядка в DOM */
+#puzzle1{ top:100px; left:160px; }
+#puzzle2{ top:100px; right:160px; }
+#puzzle3{ bottom:140px; left:160px; }
+#puzzle4{ bottom:140px; right:160px; }
+
+/* поместим угловые двери чуть ниже по слою, центральная выше */
+.puzzle-btn{ z-index:30; }
+.final-door{ z-index:50; }
 
 /* responsive: уменьшить размеры и отступы на мобильных */
 @media (max-width:760px){
+	/* переопределяем размеры угловых дверей для мелких экранов */
+	:root{
+		--puzzle-w: 140px;
+		--puzzle-h: 200px;
+	}
 	.hub-header{top:12px}
 	.hub-grid{height:calc(100vh - 96px)}
-	/* мобильные отступы чуть меньше */
-	.hub-grid > .puzzle-btn:nth-child(1){ top:72px; left:24px; }
-	.hub-grid > .puzzle-btn:nth-child(2){ top:72px; right:24px; }
-	.hub-grid > .puzzle-btn:nth-child(3){ bottom:72px; left:24px; }
-	.hub-grid > .puzzle-btn:nth-child(4){ bottom:72px; right:24px; }
-	.final-door{width:220px;height:320px}
+	#puzzle1{ top:72px; left:24px; }
+	#puzzle2{ top:72px; right:24px; }
+	#puzzle3{ bottom:72px; left:24px; }
+	#puzzle4{ bottom:72px; right:24px; }
+	.puzzle-btn{width:var(--puzzle-w);height:var(--puzzle-h)}
+	/* mobile: применяем тот же дополнительный множитель */
+	.final-door{ width: calc(var(--puzzle-w) * var(--final-scale) * 1.25 * 1.5); height: calc(var(--puzzle-h) * var(--final-scale) * 1.25 * 1.5); }
 }
+
+/* Специфичная верстка карточки для страницы puzzle1: вертикальная ориентация, height:80vh, width auto */
+.puzzle-page .letter{
+	height:80vh;
+	width:auto;
+	aspect-ratio:3/4; /* высота/ширина -> формат вертикальной карточки */
+	max-width:90vw; /* защита от выхода за экран на узких экранах */
+	display:flex;
+	flex-direction:column;
+	justify-content:flex-start;
+}
+/* мобильная подгонка */
+@media (max-width:760px){
+	.puzzle-page .letter{
+		height:76vh;
+		max-width:94vw;
+	}
+}
+
+/* Quiz styles */
+.q-progress{font-size:14px;color:var(--muted);margin-bottom:10px}
+.q-card{background:transparent;padding:6px 0}
+.q-question{font-size:1.15rem;color:var(--accent);margin:0 0 10px}
+.q-options{display:flex;flex-direction:column;gap:10px}
+.q-option{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.02);padding:8px;border-radius:8px}
+.q-option input[type="radio"]{accent-color:var(--accent)}
+.q-result{margin-top:12px;padding:12px;background:rgba(255,255,255,0.95);border-radius:10px;color:#111}
+.q-controls{display:flex;gap:12px;justify-content:center;margin-top:12px}
+.quiz-btn{background:var(--accent);color:#fff;border:0;padding:8px 12px;border-radius:10px;cursor:pointer}
+.quiz-btn:disabled{opacity:.5;cursor:not-allowed}
 
 .no-scroll{
 	overflow: hidden;
 	height: 100vh;
+}
+
+.hidden{display:none !important}
+
+/* титульный экран викторины */
+.quiz-cover{
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	gap:14px;
+	padding:18px;
+	text-align:center;
+}
+.quiz-cover .cover-img{
+	/* увеличено для более выразительного титульника */
+	width:360px;
+	max-width:84%;
+	border-radius:12px;
+	object-fit:cover;
+}
+.quiz-cover .cover-text{max-width:680px;color:var(--muted)}
+.quiz-cover .cover-text p{margin:6px 0}
+.quiz-cover .muted{opacity:.9;font-size:.95rem;color:var(--muted)}
+.quiz-cover .quiz-btn{margin-top:6px;padding:10px 16px}
+
+/* мобильный вариант титульника викторины */
+@media (max-width:760px){
+	.quiz-cover .cover-img{
+		width:260px;
+		max-width:86%;
+	}
+}
+
+/* анимация тряски для неправильного ответа */
+@keyframes shake {
+	0%, 100% { transform: translateX(0); }
+	10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+	20%, 40%, 60%, 80% { transform: translateX(5px); }
 }
