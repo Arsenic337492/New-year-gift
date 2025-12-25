@@ -13,7 +13,7 @@
 		<h2 style="color:#7b3fbf;margin-bottom:1rem;">Привет Гулсим!</h2>
 		<p style="color:#666;margin-bottom:2rem;line-height:1.5;">В последнее время ты очень много работаешь, занимаешься математикой, физикой, и в особенности программированием. Так что это испытания для тебя - отдохни.</p>
 		<div id="timer" style="font-size:5rem;font-weight:bold;color:#7b3fbf;font-family:monospace;margin-bottom:1rem;">05:00</div>
-		<button id="return-btn" style="display:none;padding:0.5rem 1rem;background:#7b3fbf;color:white;border:none;border-radius:0.5rem;cursor:pointer;font-size:1rem;margin-bottom:1rem;" onclick="location.href='hub.html'">Вернуться к испытаниям</button>
+		<button id="return-btn" style="display:none;padding:0.5rem 1rem;background:#7b3fbf;color:white;border:none;border-radius:0.5rem;cursor:pointer;font-size:1rem;margin-bottom:1rem;" onclick="localStorage.setItem('puzzle-2', '1'); location.href='hub.html'">Вернуться к испытаниям</button>
 		<p style="color:#999;font-size:0.8rem;">Если свернуть страницу таймер не будет идти, тебе придется сидеть тут и ждать :)</p>
 	</div>
 
@@ -37,7 +37,6 @@
 				timeLeft--;
 			} else {
 				document.getElementById('return-btn').style.display = 'block';
-				localStorage.setItem('puzzle-2', '1');
 				clearInterval(timerInterval);
 			}
 		}
