@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Испытание 2</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="preload" as="image" href="https://github.com/Arsenic337492/New-year-gift/blob/main/images/%D0%A4%D0%BE%D0%BD-%D0%9D%D0%93.png?raw=true">
+</head>
+<body class="puzzle-page no-scroll" style="background-image:url('https://github.com/Arsenic337492/New-year-gift/blob/main/images/%D0%A4%D0%BE%D0%BD-%D0%9D%D0%93.png?raw=true');background-size:cover;background-position:center;background-repeat:no-repeat;display:flex;align-items:center;justify-content:center;padding:2rem;">
+	
+	<div class="puzzle2-card" style="height:75vh;width:auto;aspect-ratio:9/16;background:#FFFFF5;border-radius:1rem;padding:2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.18);">
+		<h2 style="color:#7b3fbf;margin-bottom:1rem;">Привет Гулсим!</h2>
+		<p style="color:#666;margin-bottom:2rem;line-height:1.5;">В последнее время ты очень много работаешь, занимаешься математикой, физикой, и в особенности программированием. Так что это испытания для тебя - отдохни.</p>
+		<div id="timer" style="font-size:5rem;font-weight:bold;color:#7b3fbf;font-family:monospace;margin-bottom:1rem;">05:00</div>
+		<button id="return-btn" style="display:none;padding:0.5rem 1rem;background:#7b3fbf;color:white;border:none;border-radius:0.5rem;cursor:pointer;font-size:1rem;margin-bottom:1rem;" onclick="location.href='hub.html'">Вернуться к испытаниям</button>
+		<p style="color:#999;font-size:0.8rem;">Если свернуть страницу таймер не будет идти, тебе придется сидеть тут и ждать :)</p>
+	</div>
+
+	<script src="script.js" defer></script>
+	<script>
+		let timeLeft = 60; // 1 минута в секундах
+		const timerElement = document.getElementById('timer');
+		let timerInterval;
+		
+		function updateTimer() {
+			const minutes = Math.floor(Math.abs(timeLeft) / 60);
+			const seconds = Math.abs(timeLeft) % 60;
+			const sign = timeLeft < 0 ? '-' : '';
+			timerElement.textContent = `${sign}${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+			
+			if (timeLeft === 0) {
+				timerElement.style.color = '#ff0000';
+			}
+			
+			if (timeLeft > -120) {
+				timeLeft--;
+			} else {
+				document.getElementById('return-btn').style.display = 'block';
+				localStorage.setItem('puzzle-2', '1');
+				clearInterval(timerInterval);
+			}
+		}
+		
+		function startTimer() {
+			timerInterval = setInterval(updateTimer, 1000);
+		}
+		
+		function stopTimer() {
+			clearInterval(timerInterval);
+		}
+		
+		document.addEventListener('visibilitychange', () => {
+			if (document.hidden) {
+				stopTimer();
+			} else {
+				startTimer();
+			}
+		});
+		
+		startTimer();
+		updateTimer(); // Начальное обновление
+	</script>
+</body>
+</html>
