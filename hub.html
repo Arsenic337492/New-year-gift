@@ -3,24 +3,41 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
-	<title>Hub — Подарок Гуле</title>
+	<title>Все испытания</title>
 	<link rel="stylesheet" href="style.css">
+	<style>
+		@keyframes shake {
+			0%, 100% { transform: translateX(0); }
+			10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+			20%, 40%, 60%, 80% { transform: translateX(5px); }
+		}
+		.shake { animation: shake 0.5s ease-in-out; }
+	</style>
+	<!-- preload дверей, чтобы избежать мерцания при переключении -->
+	<link rel="preload" as="image" href="https://github.com/Arsenic337492/New-year-gift/blob/main/images/Door-closed.png?raw=true">
+	<link rel="preload" as="image" href="https://github.com/Arsenic337492/New-year-gift/blob/main/images/Door-open.png?raw=true">
+	<!-- preload новой текстуры центральной двери (по умолчанию) -->
+	<link rel="preload" as="image" href="https://github.com/Arsenic337492/New-year-gift/blob/main/images/Final-door-chained.png?raw=true">
+	<link rel="preload" as="image" href="https://github.com/Arsenic337492/New-year-gift/blob/main/images/%D0%A4%D0%BE%D0%BD-%D0%9D%D0%93.png?raw=true">
 </head>
 <!-- добавлен класс no-scroll чтобы отключить прокрутку на этой странице -->
-<body class="no-scroll">
+<body class="no-scroll" style="background-image:url('https://github.com/Arsenic337492/New-year-gift/blob/main/images/%D0%A4%D0%BE%D0%BD-%D0%9D%D0%93.png?raw=true');background-size:cover;background-position:center;background-repeat:no-repeat;">
 	<header class="hub-header">
-		<h1>Hub — головоломки</h1>
-		<p>Сначала реши четыре головоломки, чтобы открыть центральную дверь.</p>
+		<div class="container">
+			<div class="letter" style="max-width: 300px; padding: 1rem;">
+				<h1 style="text-align: center;">Пройди все испытания!</h1>
+			</div>
+		</div>
 	</header>
 
 	<main class="hub-main">
 		<!-- сетка 2x2 + центральная дверь -->
 		<div class="hub-grid" role="navigation" aria-label="Головоломки">
-			<a class="puzzle-btn" data-puzzle="1" href="puzzle1.html" aria-label="Головоломка 1" title="Головоломка 1"></a>
-			<a class="puzzle-btn" data-puzzle="2" href="puzzle2.html" aria-label="Головоломка 2" title="Головоломка 2"></a>
+				<a id="puzzle1" class="puzzle-btn" data-puzzle="1" href="puzzle1.html" aria-label="Испытание 1" title="Испытание 1"></a>
+				<a id="puzzle2" class="puzzle-btn" data-puzzle="2" href="puzzle2.html" aria-label="Испытание 2" title="Испытание 2"></a>
 
-			<a class="puzzle-btn" data-puzzle="3" href="puzzle3.html" aria-label="Головоломка 3" title="Головоломка 3"></a>
-			<a class="puzzle-btn" data-puzzle="4" href="puzzle4.html" aria-label="Головоломка 4" title="Головоломка 4"></a>
+				<a id="puzzle3" class="puzzle-btn" data-puzzle="3" href="puzzle3.html" aria-label="Испытание 3" title="Испытание 3"></a>
+				<a id="puzzle4" class="puzzle-btn" data-puzzle="4" href="puzzle4.html" aria-label="Испытание 4" title="Испытание 4"></a>
 
 			<!-- центральная дверь; aria-label вместо текста -->
 			<a class="final-door locked" id="finalDoor" href="#" aria-disabled="true" aria-label="Финальная дверь" title="Финальная дверь"></a>
