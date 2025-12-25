@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рекодер</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="final-card">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 100px;">
+                <textarea class="side-input left-input" placeholder="Введите текст" readonly></textarea>
+                <button id="insert-letter-btn" class="quiz-btn">Вставить письмо</button>
+            </div>
+            <div class="card-content" style="margin-top: 100px;">
+                <h1>Расшифровать письмо</h1>
+                <button id="decrypt-btn" class="quiz-btn">Расшифровать</button>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 100px;">
+                <textarea class="side-input right-input" placeholder="Введите текст" readonly></textarea>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
