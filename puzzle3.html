@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Испытание 3</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="preload" as="image" href="https://github.com/Arsenic337492/New-year-gift/blob/main/images/%D0%A4%D0%BE%D0%BD-%D0%9D%D0%93.png?raw=true">
+	<link rel="preload" as="image" href="https://github.com/Arsenic337492/New-year-gift/blob/main/images/Frog-open-mouth.png?raw=true">
+</head>
+<body class="puzzle-page no-scroll" style="background-image:url('https://github.com/Arsenic337492/New-year-gift/blob/main/images/%D0%A4%D0%BE%D0%BD-%D0%9D%D0%93.png?raw=true');background-size:cover;background-position:center;background-repeat:no-repeat;display:flex;align-items:flex-end;justify-content:space-evenly;padding:2rem;">
+	
+	<div class="puzzle3-card" style="height:60vh;width:auto;aspect-ratio:3/4;background:#FFFFF5;border-radius:1rem;padding:2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.18);align-self:center;">
+		<h2>Пароль</h2>
+		<p>Это Квакша "Жабанутый" Петрович. Он мой друг, иногда пренеприятнейший тип, но в принципе он забавный. Ну так вот, внизу, как ты видишь, есть поле для ввода пароля. А пароль я, как обычно, забыл. Может, Квакша его знает? Тыкни в него мышкой, а он, авось, тебе все и расскажет.</p>
+		<div style="display:flex;gap:0.5rem;margin-top:1rem;">
+			<input type="text" maxlength="1" style="width:2rem;height:2rem;text-align:center;border:2px solid #ccc;border-radius:0.5rem;font-size:1.2rem;text-transform:uppercase;" oninput="this.value=this.value.toUpperCase().slice(0,1);if(this.value&&this.nextElementSibling)this.nextElementSibling.focus()" onkeydown="if(event.key==='Backspace'&&!this.value&&this.previousElementSibling)this.previousElementSibling.focus()">
+			<input type="text" maxlength="1" style="width:2rem;height:2rem;text-align:center;border:2px solid #ccc;border-radius:0.5rem;font-size:1.2rem;text-transform:uppercase;" oninput="this.value=this.value.toUpperCase().slice(0,1);if(this.value&&this.nextElementSibling)this.nextElementSibling.focus()" onkeydown="if(event.key==='Backspace'&&!this.value&&this.previousElementSibling)this.previousElementSibling.focus()">
+			<input type="text" maxlength="1" style="width:2rem;height:2rem;text-align:center;border:2px solid #ccc;border-radius:0.5rem;font-size:1.2rem;text-transform:uppercase;" oninput="this.value=this.value.toUpperCase().slice(0,1);if(this.value&&this.nextElementSibling)this.nextElementSibling.focus()" onkeydown="if(event.key==='Backspace'&&!this.value&&this.previousElementSibling)this.previousElementSibling.focus()">
+			<input type="text" maxlength="1" style="width:2rem;height:2rem;text-align:center;border:2px solid #ccc;border-radius:0.5rem;font-size:1.2rem;text-transform:uppercase;" oninput="this.value=this.value.toUpperCase().slice(0,1);if(this.value&&this.nextElementSibling)this.nextElementSibling.focus()" onkeydown="if(event.key==='Backspace'&&!this.value&&this.previousElementSibling)this.previousElementSibling.focus()">
+			<input type="text" maxlength="1" style="width:2rem;height:2rem;text-align:center;border:2px solid #ccc;border-radius:0.5rem;font-size:1.2rem;text-transform:uppercase;" oninput="this.value=this.value.toUpperCase().slice(0,1);if(this.value&&this.nextElementSibling)this.nextElementSibling.focus()" onkeydown="if(event.key==='Backspace'&&!this.value&&this.previousElementSibling)this.previousElementSibling.focus()">
+			<input type="text" maxlength="1" style="width:2rem;height:2rem;text-align:center;border:2px solid #ccc;border-radius:0.5rem;font-size:1.2rem;text-transform:uppercase;" oninput="this.value=this.value.toUpperCase().slice(0,1);if(this.value&&this.nextElementSibling)this.nextElementSibling.focus()" onkeydown="if(event.key==='Backspace'&&!this.value&&this.previousElementSibling)this.previousElementSibling.focus()">
+			<input type="text" maxlength="1" style="width:2rem;height:2rem;text-align:center;border:2px solid #ccc;border-radius:0.5rem;font-size:1.2rem;text-transform:uppercase;" oninput="this.value=this.value.toUpperCase().slice(0,1);if(this.value&&this.nextElementSibling)this.nextElementSibling.focus()" onkeydown="if(event.key==='Backspace'&&!this.value&&this.previousElementSibling)this.previousElementSibling.focus()">
+		</div>
+		<button style="margin-top:1rem;padding:0.5rem 1rem;background:#7b3fbf;color:white;border:none;border-radius:0.5rem;cursor:pointer;font-size:1rem;" onclick="checkPassword()">Ввести пароль</button>
+	</div>
+
+	<div style="position:relative;">
+		<div style="position:absolute;top:calc(0px + 2vh);left:calc(50% - 4vw);transform:translateX(-50%);background:white;padding:1rem;border-radius:1rem;box-shadow:0 4px 12px rgba(0,0,0,0.15);min-width:300px;text-align:center;">
+			<p style="margin:0;font-size:1rem;color:#333;" id="frog-text">...</p>
+			<div style="position:absolute;top:100%;left:50%;transform:translateX(-50%);width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:10px solid white;"></div>
+		</div>
+		<img src="https://github.com/Arsenic337492/New-year-gift/blob/main/images/Frog-closed-mouth.png?raw=true" alt="Лягушка" style="height:80vh;width:auto;aspect-ratio:3/4;object-fit:cover;cursor:pointer;" onclick="frogClick(this)">
+	</div>
+
+	<script src="script.js" defer></script>
+	<script>
+		let lastClickTime = 0;
+		let clickCount = 0;
+		let fakeHintGiven = false;
+		let fakePasswordEntered = false;
+		const hintThreshold = Math.floor(Math.random() * 6) + 30; // 30-35 кликов
+		const fakeHintThreshold = Math.floor(Math.random() * 6) + 20; // 20-25 кликов
+		function frogClick(img) {
+			const now = Date.now();
+			const timeDiff = now - lastClickTime;
+			lastClickTime = now;
+			clickCount++;
+			
+			const frogText = document.getElementById('frog-text');
+			
+			if (clickCount >= hintThreshold) {
+				frogText.textContent = 'Ладно, сжалюсь над тобой, а то сидишь тут, надоедаешь мне, тыкаешь. Пароль - 123456... думала 7? Нет, 8! 1234568!';
+			} else if (clickCount >= fakeHintThreshold && !fakePasswordEntered) {
+				frogText.textContent = 'Ладно-ладно, скажу тебе пароль. Пароль - 654321... думала 0? Не-не-не. 8! 6543218. Почему? Почему бы и нет';
+				fakeHintGiven = true;
+				return;
+			} else if (timeDiff < 250) {
+				frogText.textContent = 'Стоп! Мне не приятно! Тыкай по медленнее';
+			} else {
+				const messages = [
+					'Ква',
+					'Ква-а-а-а',
+					'*Очень протяжный ква*',
+					'Мяу... Что, не ожидала?',
+					'Я думаю… подожди… нет, всё равно ква',
+					'Ква? Ква!',
+					'Ква… или не ква… вот в чём вопрос',
+					'Позволь спеть тебе... Ква-ква ква-ква, ква-ква ква-ква...'
+				];
+				
+				if (Math.random() < 0.03) {
+					frogText.textContent = 'Меня зовут Вито Скалетто, я из Сицилии...';
+				} else {
+					frogText.textContent = messages[Math.floor(Math.random() * messages.length)];
+				}
+			}
+			
+			img.src = 'https://github.com/Arsenic337492/New-year-gift/blob/main/images/Frog-open-mouth.png?raw=true';
+			setTimeout(() => img.src = 'https://github.com/Arsenic337492/New-year-gift/blob/main/images/Frog-closed-mouth.png?raw=true', 300);
+		}
+		
+		function checkPassword() {
+			const inputs = document.querySelectorAll('input[type="text"]');
+			const password = Array.from(inputs).map(input => input.value).join('');
+			const frogText = document.getElementById('frog-text');
+			const button = document.querySelector('button[onclick="checkPassword()"]');
+			
+			if (password === '1234568') {
+				frogText.textContent = 'Окей, это было быстро. Пока, я был не рад познакомиться с тобой. Надеюсь не увидимся';
+				button.textContent = 'Вернуться к испытаниям';
+				button.onclick = () => location.href = 'hub.html';
+				localStorage.setItem('puzzle-3', '1');
+			} else if (password === 'БАЗИНГА') {
+				frogText.textContent = 'О не-е-е-е-е-е-е-ет! Откуда ты узнала мой убер сверх гига секретный мега пароль?!';
+				button.textContent = 'Вернуться к испытаниям';
+				button.onclick = () => location.href = 'hub.html';
+				localStorage.setItem('puzzle-3', '1');
+			} else if (password === '6543218') {
+				frogText.textContent = 'Упс, кажется я чутка напутал. Мне ни капли не жаль. Попробуй еще';
+				fakePasswordEntered = true;
+				inputs.forEach(input => input.value = '');
+			} else {
+				frogText.textContent = 'Ты что, правда думала наугад написать? Ухихихиихи, не получится, это самый надежный пароль в мире!';
+				inputs.forEach(input => input.value = '');
+			}
+		}
+	</script>
+</body>
+</html>
