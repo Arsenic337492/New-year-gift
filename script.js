@@ -128,27 +128,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// сброс прогресса (для разработки) — удержать Ctrl+Shift и клик по двери
 	if (finalDoor) {
-		finalDoor.addEventListener('click', (e) => {
-			// dev-сброс
-			if (e.ctrlKey && e.shiftKey) {
-				for (let i=1;i<=TOTAL;i++) localStorage.removeItem(storageKey(i));
-				puzzleButtons.forEach(b=>b.classList.remove('visited'));
-				updateDoorState(0);
-				alert('Прогресс сброшен (dev).');
-				return;
-			}
+	finalDoor.addEventListener('click', (e) => {
 
-			// анимация тряски для заблокированной двери
-			if (finalDoor.classList.contains('locked')) {
-				finalDoor.classList.add('shake');
-				setTimeout(() => finalDoor.classList.remove('shake'), 500);
-			}
-
-			// Ничего не делаем при обычном клике по центральной двери
+		// dev-сброс
+		if (e.ctrlKey && e.shiftKey) {
 			e.preventDefault();
+			for (let i = 1; i <= TOTAL; i++) {
+				localStorage.removeItem(storageKey(i));
+			}
+			puzzleButtons.forEach(b => b.classList.remove('visited'));
+			updateDoorState(0);
+			alert('Прогресс сброшен (dev).');
 			return;
-		});
-	}
+		}
+
+		// если дверь ЗАКРЫТА — тряска и стоп
+		if (finalDoor.classList.contains('locked')) {
+			e.preventDefault();
+			finalDoor.classList.add('shake');
+			setTimeout(() => finalDoor.classList.remove('shake'), 500);
+			return;
+		}
+
+		// ✅ если дверь открыта — НИЧЕГО НЕ ДЕЛАЕМ
+		// переход произойдёт по href="final.html"
+	});
+}
 
 	// функция для отметки прохождения испытания
 	window.markPuzzleCompleted = (puzzleNumber) => {
@@ -592,3 +597,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// ...existing code end...
 });
+
